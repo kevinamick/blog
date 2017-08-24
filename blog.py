@@ -11,6 +11,7 @@ from flask_mail import Message, Mail
 
 from forms import Contact
 from app import app, database
+from config_reader import config_reader
 
 # Mail configuration for contact page
 mail = Mail()
@@ -18,8 +19,8 @@ mail = Mail()
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = 'kevinamick81@gmail.com'
-app.config["MAIL_PASSWORD"] = 'pitcher90'
+app.config["MAIL_USERNAME"] = config_reader('CONFIG')['mail_username']
+app.config["MAIL_PASSWORD"] = config_reader('CONFIG')['mail_password']
 mail.init_app(app)
 
 

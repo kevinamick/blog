@@ -2,14 +2,17 @@ import os
 from flask import Flask
 from playhouse.flask_utils import FlaskDB
 
+from config_reader import config_reader
+
+
 # You may consider using a one-way hash to generate the password, and then
 # use the hash again in the login view to perform the comparison. This is just
 # for simplicity.
-ADMIN_PASSWORD = 'secret'
+ADMIN_PASSWORD = config_reader('CONFIG')['admin_password']
 
 # The secret key is used internally by Flask to encrypt session data stored
 # in cookies. Make this unique for your app.
-SECRET_KEY = 'key'
+SECRET_KEY = config_reader('CONFIG')['secret_key']
 
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 
