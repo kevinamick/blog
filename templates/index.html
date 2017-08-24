@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block intro %}
+    {% if search %}
+    {% else %}
+    <div class="about">
+        <p>
+            Hey! I'm Kevin, a veteran turned college student at Towson University; pursuing a degree in Computer
+            Science.<br>
+            I have much to learn in the development world, but i'm loving every moment of it. I also love beer,
+            including brewing my own. So feel free to contact me about any of the above!
+        </p>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block title %}Blog entries{% endblock %}
+
+{% block content_title %}
+    {% if search %}
+        Search "{{ search }}"
+    {% else %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% for entry in object_list %}
+        {% if search %}
+            {% set entry = entry.entry %}
+        {% endif %}
+        <h3>
+            <a href="
+                    {% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
+                {{ entry.title }}
+            </a>
+        </h3>
+        <hr/>
+        <p>{{ entry.content }}</p>
+        <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+    {% else %}
+        <p>No entries have been created yet.</p>
+    {% endfor %}
+    {% include "includes/pagination.html" %}
+{% endblock %}

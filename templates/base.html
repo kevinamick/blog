@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <title>Kevin Amick</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/blog.css') }}"/>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/font-awesome.min.css') }}"/>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-social.css') }}"/>
+    {% block extra_head %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="navigation">
+        <nav class="sidenav" role="navigation">
+            <div class="sidenav-brand">
+                <img class="img-rounded" src="{{ url_for('static', filename='images/15185225.jpg') }}">
+                <a class="brand" href="{{ url_for('index') }}">Kevin Amick</a>
+            </div>
+            {% block search_bar %}
+                <form action="{{ url_for('index') }}" class="navbar-form" id="search-form"
+                      method="get"
+                      role="search">
+                    <div class="form-group">
+                        <input class="form-control" name="q" placeholder="Search" type="text"
+                               value="{% if search %}{{ search }}{% endif %}">
+                    </div>
+                </form>
+            {% endblock %}
+            <ul class="public-nav">
+                <li><a href="http://www.github.com/kevinamick"><span class="glyphicon glyphicon-qrcode"></span>Code</a>
+                </li>
+                <li><a href=""><span class="glyphicon glyphicon-briefcase"></span>Resume</a></li>
+                <li><a href="{{ url_for('contact') }}"><span class="glyphicon glyphicon-send"></span>Contact</a></li>
+            </ul>
+            {% if session.logged_in %}
+                <p class="brand">Admin</p>
+                <ul class="admin-nav">
+                <li><a href="{{ url_for('drafts') }}"><span class="glyphicon glyphicon-erase"></span>Drafts</a></li>
+                <li><a href="{{ url_for('create') }}"><span class="glyphicon glyphicon-pencil"></span>Create Entry</a>
+                </li>
+                <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span>Log out</a></li>
+            {% endif %}
+            {% block extra_header %}{% endblock %}
+            </ul>
+        </nav>
+        <div class="soc-wrap">
+            <div class="social">
+                <a class="btn btn-social-icon btn-twitter">
+                    <span class="fa fa-twitter"></span>
+                </a>
+            </div>
+            <div class="social">
+                <a class="btn btn-social-icon btn-linkedin">
+                    <span class="fa fa-linkedin"></span>
+                </a>
+            </div>
+            <div class="social">
+                <a class="btn btn-social-icon btn-github">
+                    <span class="fa fa-github"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+
+        {% block intro %}{% endblock %}
+
+        {% block page_header %}
+            <div class="page-header">
+                <h1>{% block content_title %}{% endblock %}</h1>
+            </div>
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+        <footer class="navbar-default navbar-fixed-bottom">
+            <hr/>
+            <p>Kevin Amick, &copy; 2015</p>
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>
