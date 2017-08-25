@@ -6,3 +6,4 @@ peewee
 configparser
 flask_wtf
 wtforms
+gunicorn
