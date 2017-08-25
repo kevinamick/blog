@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Panton-BlackCaps";
+    src: url('../fonts/Panton-BlackCaps.otf');
+}
+
+@font-face {
+    font-family: "Panton-LightCaps";
+    src: url('../fonts/Panton-LightCaps.otf');
+}
+
 @media (max-width: 768px) {
     .navigation {
         min-width: 80px;
@@ -60,7 +70,7 @@
 
 i, span {
     display: inline-block;
-    margin-right:10px;
+    margin-right: 10px;
 }
 
 a.brand {
@@ -117,45 +127,60 @@ a.brand {
 }
 
 .content {
-  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
+    font-family: "Panton-BlackCaps";
     width: 1000px;
     min-height: 100vh;
     margin-left: 10px;
     transition: all 0.3s;
 }
 
-.about {
-  position:relative;
-  padding:15px;
-  margin:100px 0 0.5em;
-  color:#333;
-  background:#eee;
-  /* css3 */
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-  border-radius:10px;
+.body {
+    font-family: "Panton-LightCaps";
 }
 
-.about p {font-size:18px; line-height:1.25em;}
+.about {
+    font-family: "Panton-LightCaps";
+    position: relative;
+    padding: 15px;
+    margin: 100px 0 0.5em;
+    color: #333;
+    background: #eee;
+    /* css3 */
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.25em;
+}
 
 /* creates the triangle */
 .about:after {
-  content:"";
-  position:absolute;
-  top: 30px;
-  left: -25px;
-  border-top: 35px solid transparent;
-  border-bottom: 35px solid transparent;
-  border-right: 35px solid #eee;
-  /* reduce the damage in FF3.0 */
-  display:block;
-  width:0;
+    content: "";
+    position: absolute;
+    top: 30px;
+    left: -25px;
+    border-top: 35px solid transparent;
+    border-bottom: 35px solid transparent;
+    border-right: 35px solid #eee;
+    /* reduce the damage in FF3.0 */
+    display: block;
+    width: 0;
 }
 
 .about {
     margin-top: 10px;
     font-weight: bold;
-    font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
+}
+
+.title a {
+    color: black;
+}
+
+.time {
+    font-size: 13px;
 }
 
 /* Message flashing */

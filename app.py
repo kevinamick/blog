@@ -4,7 +4,6 @@ from playhouse.flask_utils import FlaskDB
 
 from config_reader import config_reader
 
-
 # You may consider using a one-way hash to generate the password, and then
 # use the hash again in the login view to perform the comparison. This is just
 # for simplicity.

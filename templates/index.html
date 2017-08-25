@@ -14,12 +14,9 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}Blog entries{% endblock %}
-
 {% block content_title %}
     {% if search %}
         Search "{{ search }}"
-    {% else %}
     {% endif %}
 {% endblock %}
 
@@ -28,15 +25,15 @@
         {% if search %}
             {% set entry = entry.entry %}
         {% endif %}
-        <h3>
+        <h3 class="title">
             <a href="
                     {% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
                 {{ entry.title }}
             </a>
         </h3>
+        <p class="time">Created {{ entry.timestamp.strftime('%m/%d/%Y') }}</p>
         <hr/>
-        <p>{{ entry.content }}</p>
-        <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+        <p class="body">{{ entry.html_content }}</p>
     {% else %}
         <p>No entries have been created yet.</p>
     {% endfor %}
