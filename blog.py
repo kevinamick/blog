@@ -1,16 +1,14 @@
 import functools
 import urllib
 
-from models import Entry, FTSEntry
+from models import Entry
 
 from flask import (flash, redirect, render_template, request, Response, session, url_for)
 
-from playhouse.flask_utils import get_object_or_404, object_list
-from playhouse.sqlite_ext import *
 from flask_mail import Message, Mail
 
 from forms import Contact
-from app import app, database
+from app import app, db
 from config_reader import config_reader
 
 # Mail configuration for contact page
@@ -88,17 +86,19 @@ def _create_or_edit(entry, template):
         else:
             # Wrap the call to save in a transaction so we can roll it back
             # cleanly in the event of an integrity error.
-            try:
-                with database.atomic():
-                    entry.save()
-            except IntegrityError:
-                flash('Error: this title is already in use.', 'danger')
-            else:
+            if not db.session.query(Entry).filter(Entry.title == entry.title).count():
+                new_entry = Entry(entry.title, entry.content, entry.published)
+                db.session.add(new_entry)
+                db.session.commit()
+
                 flash('Entry saved successfully.', 'success')
                 if entry.published:
                     return redirect(url_for('detail', slug=entry.slug))
                 else:
                     return redirect(url_for('edit', slug=entry.slug))
+
+            else:
+                flash('Error: this title is already in use.', 'danger')
 
     return render_template(template, entry=entry)
 
@@ -139,14 +139,14 @@ def detail(slug):
         query = Entry.select()
     else:
         query = Entry.public()
-    entry = get_object_or_404(query, Entry.slug == slug)
+    entry = Entry.query.get(query)
     return render_template('detail.html', entry=entry)
 
 
 @app.route('/<slug>/edit/', methods=['GET', 'POST'])
 @login_required
 def edit(slug):
-    entry = get_object_or_404(Entry, Entry.slug == slug)
+    entry = Entry.query.get(slug)
     return _create_or_edit(entry, 'edit.html')
 
 
@@ -170,7 +170,7 @@ def not_found(exc):
 
 
 def main():
-    database.create_tables([Entry, FTSEntry], safe=True)
+    db.create_all()
     app.run(debug=True)
 
 if __name__ == '__main__':

@@ -7,3 +7,5 @@ configparser
 flask_wtf
 wtforms
 gunicorn
+SQLAlchemy==1.1.5
+flask_sqlalchemy

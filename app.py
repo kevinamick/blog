@@ -1,6 +1,6 @@
 import os
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
-from playhouse.flask_utils import FlaskDB
 
 from config_reader import config_reader
 
@@ -20,17 +20,12 @@ APP_DIR = os.path.dirname(os.path.realpath(__file__))
 SITE_WIDTH = 800
 
 # The playhouse.flask_utils.FlaskDB object accepts database URL configuration.
-DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'blog.db')
 DEBUG = False
 
 # Create a Flask WSGI app and configure it using values from the module.
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-# FlaskDB is a wrapper for a peewee database that sets up pre/post-request
-# hooks for managing database connections.
-flask_db = FlaskDB(app)
-
-# The `database` is the actual peewee database, as opposed to flask_db which is
-# the wrapper.
-database = flask_db.database
+#Postgres DB hookup
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/blog'
+db = SQLAlchemy(app)
