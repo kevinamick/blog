@@ -163,6 +163,6 @@ ENV/
 /site
 
 # config file
-/config.ini
+*.ini
 
 # End of https://www.gitignore.io/api/python,pycharm
