@@ -19,7 +19,7 @@ APP_DIR = os.path.dirname(os.path.realpath(__file__))
 # embedded objects with maxwidth=800.
 SITE_WIDTH = 800
 
-# The playhouse.flask_utils.FlaskDB object accepts database URL configuration.
+
 DEBUG = False
 
 # Create a Flask WSGI app and configure it using values from the module.
